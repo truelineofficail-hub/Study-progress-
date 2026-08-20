@@ -1,0 +1,6408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
+
+<title>Mission October 2026</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff7a00">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mission Oct">
+
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --orange:#ff7a00;
+    --orange2:#ff9d3d;
+    --light:#fff4e8;
+    --bg:#f7f7f7;
+    --white:#fff;
+    --text:#171717;
+    --muted:#777;
+    --border:#ececec;
+    --green:#19a463;
+    --red:#e5484d;
+    --yellow:#e9a400;
+    --shadow:0 8px 30px rgba(0,0,0,.055);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ededed;
+    color:var(--text);
+}
+
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.app{
+    width:100%;
+    max-width:430px;
+    min-height:100vh;
+    margin:auto;
+    background:#fafafa;
+    padding-bottom:90px;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:60px;
+    padding:0 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+}
+
+.header-brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.header-mark{
+    width:30px;
+    height:30px;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(
+        135deg,
+        var(--orange),
+        var(--orange2)
+    );
+}
+
+.header-mark svg{
+    width:16px;
+    height:16px;
+}
+
+.logo{
+    font-weight:900;
+    font-size:14.5px;
+    letter-spacing:-.3px;
+    line-height:1.15;
+}
+
+.logo span{
+    color:var(--orange);
+}
+
+.header-icon-btn{
+    width:36px;
+    height:36px;
+    border-radius:11px;
+    border:0;
+    background:var(--light);
+    color:#666;
+    display:grid;
+    place-items:center;
+    transition:
+        background .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+.header-icon-btn svg{
+    width:18px;
+    height:18px;
+    stroke:currentColor;
+    stroke-width:1.8;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.header-icon-btn:active{
+    transform:scale(.92);
+    background:#ffe8d1;
+    color:var(--orange);
+}
+
+.page{
+    display:none;
+    padding:18px 16px 25px;
+}
+
+.page.active{
+    display:block;
+}
+
+.title{
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:5px;
+    letter-spacing:-1px;
+}
+
+.subtitle{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:17px;
+    margin-bottom:13px;
+    box-shadow:var(--shadow);
+}
+
+.card-title{
+    font-size:14px;
+    font-weight:800;
+}
+
+.small{
+    font-size:11px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.hero{
+    border-radius:25px;
+    padding:22px;
+    margin-bottom:14px;
+}
+
+.mission-hero{
+    position:relative;
+    overflow:hidden;
+    background:#ffffff;
+    border:1px solid #ffe1bd;
+}
+
+.hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.hero-label{
+    color:var(--orange);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.5px;
+}
+
+.hero-day{
+    margin-top:5px;
+    font-size:10px;
+    font-weight:900;
+    color:var(--orange2);
+    letter-spacing:1px;
+}
+
+.hero-day span{
+    color:var(--orange);
+}
+
+.hero-fire{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:var(--light);
+    font-size:22px;
+}
+
+.hero-main{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:22px;
+}
+
+.hero-days{
+    display:flex;
+    align-items:flex-end;
+    gap:4px;
+}
+
+.hero-days span{
+    font-size:52px;
+    line-height:.8;
+    font-weight:950;
+    color:var(--orange);
+    letter-spacing:-4px;
+}
+
+.hero-days small{
+    font-size:8px;
+    font-weight:900;
+    color:var(--orange2);
+    line-height:1.1;
+    margin-bottom:2px;
+}
+
+.hero-message{
+    flex:1;
+}
+
+.hero-message h1{
+    font-size:16px;
+    line-height:1.1;
+    font-weight:950;
+    color:var(--orange);
+}
+
+.hero-message p{
+    margin-top:6px;
+    font-size:10px;
+    line-height:1.5;
+    color:#777;
+}
+
+.energy-section{
+    margin-top:25px;
+    padding-top:15px;
+    border-top:1px solid rgba(255,122,0,.15);
+}
+
+.energy-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:9px;
+    color:#777;
+    font-weight:800;
+}
+
+.energy-head strong{
+    color:var(--orange);
+    font-size:10px;
+}
+
+.energy-dots{
+    display:flex;
+    gap:8px;
+    margin:11px 0;
+}
+
+.energy-dots span{
+    flex:1;
+    height:8px;
+    border-radius:20px;
+    background:#e9e9e9;
+    transition:.35s ease;
+}
+
+.energy-dots span.active{
+    background:linear-gradient(
+        90deg,
+        var(--orange),
+        var(--orange2)
+    );
+    box-shadow:0 2px 8px rgba(255,122,0,.25);
+}
+
+.hero-progress{
+    height:5px;
+}
+
+.energy-status{
+    margin-top:10px;
+    font-size:9px;
+    font-weight:900;
+    color:#999;
+    letter-spacing:.5px;
+}
+
+.energy-status.active{
+    color:var(--orange);
+}
+
+.energy-status.complete{
+    color:var(--green);
+}
+
+.grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.stat{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    box-shadow:var(--shadow);
+}
+
+.stat-label{
+    font-size:9px;
+    color:var(--muted);
+    font-weight:700;
+}
+
+.stat-value{
+    font-size:23px;
+    font-weight:900;
+    margin:6px 0;
+}
+
+.orange{
+    color:var(--orange);
+}
+
+.green{
+    color:var(--green);
+}
+
+.red{
+    color:var(--red);
+}
+
+.progress{
+    height:7px;
+    background:#eeeeee;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(
+        90deg,
+        var(--orange),
+        var(--orange2)
+    );
+    border-radius:20px;
+    transition:.4s;
+}
+
+.btn{
+    border:none;
+    background:var(--orange);
+    color:white;
+    border-radius:12px;
+    padding:12px 15px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.btn:active{
+    transform:scale(.97);
+}
+
+.btn.secondary{
+    background:#fff4e8;
+    color:var(--orange);
+    border:1px solid #ffd7b0;
+}
+
+.btn.dark{
+    background:#171717;
+}
+
+.full{
+    width:100%;
+}
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0 11px;
+}
+
+.section-title h3{
+    font-size:14px;
+}
+
+.section-title span{
+    color:var(--orange);
+    font-size:10px;
+    font-weight:800;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.task:last-child{
+    border-bottom:none;
+}
+
+.task-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:var(--light);
+    font-size:18px;
+    flex-shrink:0;
+}
+
+.task-info{
+    flex:1;
+}
+
+.task-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.task-info span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.check{
+    width:25px;
+    height:25px;
+    border-radius:8px;
+    border:2px solid #ddd;
+    background:white;
+    position:relative;
+    flex-shrink:0;
+}
+
+.check.done{
+    background:var(--orange);
+    border-color:var(--orange);
+}
+
+.check.done::after{
+    content:"✓";
+    position:absolute;
+    color:white;
+    font-size:15px;
+    font-weight:900;
+    left:4px;
+    top:1px;
+}
+
+.subject{
+    padding:17px;
+}
+
+.subject-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.subject-icon{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    background:var(--light);
+    display:grid;
+    place-items:center;
+    font-size:21px;
+}
+
+.subject-info{
+    flex:1;
+}
+
+.subject-info strong{
+    font-size:13px;
+}
+
+.subject-info p{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:4px;
+}
+
+.subject-percent{
+    font-weight:900;
+    color:var(--orange);
+}
+
+.chapter{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:15px;
+    margin-bottom:10px;
+    box-shadow:var(--shadow);
+}
+
+.chapter-head{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.chapter-info{
+    flex:1;
+}
+
+.chapter-info strong{
+    font-size:12px;
+}
+
+.chapter-info p{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.chapter-percent{
+    color:var(--orange);
+    font-size:11px;
+    font-weight:900;
+}
+
+.stage-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-top:13px;
+}
+
+.stage{
+    border:1px solid #e8e8e8;
+    background:#fafafa;
+    border-radius:9px;
+    padding:8px 3px;
+    text-align:center;
+    font-size:8px;
+    color:#777;
+}
+
+.stage.active{
+    color:white;
+    background:var(--orange);
+    border-color:var(--orange);
+}
+
+.input,
+textarea,
+select{
+    width:100%;
+    border:1px solid #ddd;
+    border-radius:12px;
+    background:white;
+    padding:12px;
+    outline:none;
+    font-size:12px;
+    color:#171717;
+}
+
+.input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--orange);
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:13px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.row-main{
+    flex:1;
+}
+
+.row-main strong{
+    font-size:12px;
+}
+
+.row-main p{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.more-item{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:14px 4px;
+    border-bottom:1px solid var(--border);
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:background .15s ease;
+}
+
+.more-item:last-child{
+    border-bottom:0;
+}
+
+.more-item:active{
+    background:var(--light);
+}
+
+.more-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    background:var(--light);
+    flex-shrink:0;
+    font-size:17px;
+}
+
+.more-main{
+    flex:1;
+}
+
+.more-main strong{
+    font-size:12.5px;
+    font-weight:800;
+    display:block;
+}
+
+.more-main p{
+    font-size:10px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.more-chevron{
+    color:#c7c7c7;
+    font-size:16px;
+    font-weight:700;
+}
+
+.status{
+    padding:5px 7px;
+    border-radius:7px;
+    background:#f2f2f2;
+    color:#777;
+    font-size:8px;
+    font-weight:800;
+}
+
+.status.done{
+    background:#e7f8ef;
+    color:var(--green);
+}
+
+.status.progress{
+    background:#fff2e5;
+    color:var(--orange);
+}
+
+.weekly-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.weekly-header strong{
+    font-size:12px;
+}
+
+.weekly-header p{
+    margin-top:4px;
+}
+
+.chart{
+    height:165px;
+    display:flex;
+    align-items:flex-end;
+    gap:7px;
+}
+
+.bar-wrap{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
+}
+
+.bar-area{
+    width:100%;
+    height:130px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+}
+
+.bar{
+    width:19px;
+    min-height:3px;
+    background:linear-gradient(
+        to top,
+        var(--orange),
+        var(--orange2)
+    );
+    border-radius:7px 7px 3px 3px;
+    transition:height .5s ease;
+}
+
+.bar.today{
+    box-shadow:
+        0 0 0 3px #fff0e1,
+        0 5px 15px rgba(255,122,0,.2);
+}
+
+.bar-label{
+    margin-top:8px;
+    font-size:8px;
+    color:#999;
+    font-weight:700;
+}
+
+.bar-minutes{
+    font-size:7px;
+    color:#aaa;
+    margin-bottom:4px;
+}
+
+.timer{
+    width:235px;
+    height:235px;
+    margin:25px auto;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:conic-gradient(
+        var(--orange) 0deg,
+        #eee 0deg
+    );
+    position:relative;
+}
+
+.timer::after{
+    content:"";
+    position:absolute;
+    inset:12px;
+    background:white;
+    border-radius:50%;
+}
+
+.timer-inner{
+    position:relative;
+    z-index:2;
+    text-align:center;
+}
+
+.timer-time{
+    font-size:39px;
+    font-weight:900;
+}
+
+.timer-label{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:5px;
+}
+
+.timer-buttons{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+}
+
+.day{
+    display:flex;
+    gap:10px;
+    margin-bottom:11px;
+}
+
+.day-dot{
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    margin-top:19px;
+    background:#ddd;
+    flex-shrink:0;
+}
+
+.day.completed .day-dot{
+    background:var(--green);
+}
+
+.day.partial .day-dot{
+    background:var(--yellow);
+}
+
+.day-card{
+    flex:1;
+}
+
+.badges{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.badge{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:18px;
+    text-align:center;
+    min-height:130px;
+}
+
+.badge-icon{
+    font-size:30px;
+    margin-bottom:9px;
+}
+
+.badge strong{
+    display:block;
+    font-size:11px;
+}
+
+.badge p{
+    font-size:9px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.badge.locked{
+    opacity:.35;
+    filter:grayscale(1);
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:430px;
+    height:64px;
+    padding:0 6px;
+    background:rgba(255,255,255,.98);
+    backdrop-filter:blur(20px);
+    border-top:1px solid #eee;
+    box-shadow:0 -8px 24px rgba(0,0,0,.04);
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    z-index:100;
+}
+
+.nav-btn{
+    border:0;
+    background:none;
+    color:#9a9a9a;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:.2px;
+    flex:1;
+    height:48px;
+    border-radius:14px;
+    transition:
+        color .18s ease,
+        background .18s ease;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.nav-btn svg{
+    width:21px;
+    height:21px;
+    stroke:currentColor;
+    stroke-width:1.8;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    transition:transform .18s ease;
+}
+
+.nav-btn.active{
+    color:var(--orange);
+    background:#fff1e2;
+}
+
+.nav-btn.active svg{
+    stroke-width:2.1;
+    transform:translateY(-1px);
+}
+
+.nav-btn:active{
+    transform:scale(.94);
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:90px;
+    transform:translateX(-50%) translateY(20px);
+    background:#171717;
+    color:white;
+    padding:12px 16px;
+    border-radius:12px;
+    font-size:11px;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+    z-index:300;
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+.syllabus-subject{
+    margin-bottom:14px;
+}
+
+.syllabus-head{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+}
+
+.syllabus-icon{
+    width:36px;
+    height:36px;
+    border-radius:11px;
+    display:grid;
+    place-items:center;
+    background:var(--light);
+    font-size:17px;
+    flex-shrink:0;
+}
+
+.syllabus-head-main{
+    flex:1;
+}
+
+.syllabus-head-main strong{
+    font-size:12.5px;
+    font-weight:800;
+    display:block;
+}
+
+.syllabus-head-main p{
+    font-size:9.5px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.syllabus-percent{
+    font-size:12px;
+    font-weight:900;
+    color:var(--orange);
+}
+
+.syllabus-chevron{
+    color:#c7c7c7;
+    font-size:16px;
+    font-weight:700;
+}
+
+.syllabus-chapters{
+    margin-top:10px;
+    padding-left:2px;
+}
+
+.syllabus-chapter{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.syllabus-chapter:last-child{
+    border-bottom:0;
+}
+
+.syllabus-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:#e0e0e0;
+}
+
+.syllabus-dot.partial{
+    background:#ffb156;
+}
+
+.syllabus-dot.done{
+    background:#2ecc71;
+}
+
+.syllabus-chapter span{
+    font-size:11px;
+    color:#444;
+}
+
+.syllabus-chapter.is-done span{
+    color:#999;
+    text-decoration:line-through;
+}
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(20,15,10,.5);
+    backdrop-filter:blur(3px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:500;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:22px 22px 0 0;
+    padding:22px 20px calc(20px + env(safe-area-inset-bottom));
+    animation:modalUp .22s ease;
+    max-height:85vh;
+    overflow-y:auto;
+}
+
+@keyframes modalUp{
+    from{
+        transform:translateY(24px);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.modal-title{
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:-.3px;
+}
+
+.modal-message{
+    font-size:11.5px;
+    color:var(--muted);
+    margin-top:6px;
+    line-height:1.6;
+}
+
+.modal-fields{
+    margin-top:14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.modal-fields:empty{
+    margin-top:0;
+}
+
+.modal-fields label{
+    font-size:10px;
+    font-weight:800;
+    color:#999;
+    letter-spacing:.3px;
+    margin-bottom:5px;
+    display:block;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.modal-actions .btn{
+    flex:1;
+    margin:0;
+}
+
+@media(max-width:360px){
+
+    .hero-days span{
+        font-size:45px;
+    }
+
+    .hero-message h1{
+        font-size:14px;
+    }
+
+    .stage{
+        font-size:7px;
+    }
+
+}
+
+@media(min-width:431px){
+
+    body{
+        background:#eeeeee;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+    <div class="header-brand">
+
+        <div class="header-mark">
+
+            <svg viewBox="0 0 24 24" fill="#fff">
+                <path d="M12 2c1 3-1 4.5-2 6-1.3 1.8-2 3.4-2 5a4 4 0 0 0 8 0c0-1.2-.5-2-1-2.5.3 1.6-.4 2.5-1.3 2.5-1.5 0-1.4-1.6-.7-2.7C13.8 8.8 13.6 5 12 2z"/>
+            </svg>
+
+        </div>
+
+        <div class="logo">
+            MISSION <span>OCTOBER</span>
+        </div>
+
+    </div>
+
+    <button
+        class="header-icon-btn"
+        onclick="go('settings')"
+        aria-label="Settings">
+
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V19.5a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.04H4.5a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H10.6a1.7 1.7 0 0 0 1.04-1.56V4.5a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V10.6a1.7 1.7 0 0 0 1.56 1.04H19.5a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1.04z"/>
+        </svg>
+
+    </button>
+
+</header>
+
+<section class="page active" id="home">
+
+    
+
+    <div class="hero mission-hero">
+
+        <div class="hero-top">
+
+            <div>
+
+                <div class="hero-label">
+                    MISSION OCTOBER 2026
+                </div>
+
+                <div class="hero-day">
+                    DAY <span id="heroDay">01</span>
+                </div>
+
+            </div>
+
+            <div class="hero-fire">
+                🔥
+            </div>
+
+        </div>
+
+        <div class="hero-main">
+
+            <div class="hero-days">
+
+                <span id="daysLeft">
+                    --
+                </span>
+
+                <small>
+                    DAYS<br>LEFT
+                </small>
+
+            </div>
+
+            <div class="hero-message">
+
+                <h1 id="heroTitle">
+                    YOUR MISSION<br>
+                    STARTS NOW.
+                </h1>
+
+                <p id="heroMessage">
+                    2 hours today.
+                    That's all you owe yourself.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="energy-section">
+
+            <div class="energy-head">
+
+                <span>
+                    TODAY'S ENERGY
+                </span>
+
+                <strong>
+                    <span id="heroMinutes">0</span>/120 min
+                </strong>
+
+            </div>
+
+            <div
+                class="energy-dots"
+                id="energyDots">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+            <div class="progress hero-progress">
+
+                <span id="heroProgress"></span>
+
+            </div>
+
+            <div
+                class="energy-status"
+                id="energyStatus">
+
+                ○ START YOUR ENGINE
+
+            </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="grid2">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                OVERALL PROGRESS
+            </div>
+
+            <div
+                class="stat-value orange"
+                id="overallPercent">
+                0%
+            </div>
+
+            <div class="progress">
+
+                <span id="overallBar"></span>
+
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                STUDY TIME
+            </div>
+
+            <div
+                class="stat-value"
+                id="studyHours">
+                0h
+            </div>
+
+            <div class="stat-label">
+                TOTAL
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                STREAK
+            </div>
+
+            <div class="stat-value orange">
+
+                <span id="streak">
+                    0
+                </span>
+                🔥
+
+            </div>
+
+            <div class="stat-label">
+                DAYS
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TASKS TODAY
+            </div>
+
+            <div
+                class="stat-value"
+                id="taskProgress">
+                0/5
+            </div>
+
+            <div class="stat-label">
+                COMPLETED
+            </div>
+
+        </div>
+
+    </div>
+
+    
+
+    <div class="section-title">
+
+        <h3>
+            Today's Mission
+        </h3>
+
+        <span>
+            2 HOURS
+        </span>
+
+    </div>
+
+    <div class="card">
+
+        <div class="task">
+
+            <div class="task-icon">
+                💻
+            </div>
+
+            <div class="task-info">
+
+                <strong>
+                    Computer Science
+                </strong>
+
+                <span>
+                    50 minutes • Priority #1
+                </span>
+
+            </div>
+
+            <button
+                class="check"
+                data-task="cs"
+                onclick="toggleTask(this)">
+            </button>
+
+        </div>
+
+        <div class="task">
+
+            <div class="task-icon">
+                🏛️
+            </div>
+
+            <div class="task-info">
+
+                <strong>
+                    Political Science
+                </strong>
+
+                <span>
+                    30 minutes
+                </span>
+
+            </div>
+
+            <button
+                class="check"
+                data-task="pol"
+                onclick="toggleTask(this)">
+            </button>
+
+        </div>
+
+        <div class="task">
+
+            <div class="task-icon">
+                📊
+            </div>
+
+            <div class="task-info">
+
+                <strong>
+                    Business Studies
+                </strong>
+
+                <span>
+                    25 minutes
+                </span>
+
+            </div>
+
+            <button
+                class="check"
+                data-task="bst"
+                onclick="toggleTask(this)">
+            </button>
+
+        </div>
+
+        <div class="task">
+
+            <div class="task-icon">
+                ⌨️
+            </div>
+
+            <div class="task-info">
+
+                <strong>
+                    Data Entry
+                </strong>
+
+                <span>
+                    10 minutes
+                </span>
+
+            </div>
+
+            <button
+                class="check"
+                data-task="de"
+                onclick="toggleTask(this)">
+            </button>
+
+        </div>
+
+        <div class="task">
+
+            <div class="task-icon">
+                📖
+            </div>
+
+            <div class="task-info">
+
+                <strong>
+                    English
+                </strong>
+
+                <span>
+                    5 minutes
+                </span>
+
+            </div>
+
+            <button
+                class="check"
+                data-task="eng"
+                onclick="toggleTask(this)">
+            </button>
+
+        </div>
+
+    </div>
+
+    <button
+        class="btn full"
+        onclick="go('timer')">
+
+        ▶ START TODAY'S MISSION
+
+    </button>
+
+    
+
+    <div class="section-title">
+
+        <h3>
+            This Week
+        </h3>
+
+        <span>
+            REAL DATA
+        </span>
+
+    </div>
+
+    <div class="card">
+
+        <div class="weekly-header">
+
+            <div>
+
+                <strong>
+                    STUDY TIME
+                </strong>
+
+                <p class="muted small">
+                    Automatically tracked
+                </p>
+
+            </div>
+
+            <strong
+                class="orange"
+                id="weeklyTotal">
+
+                0 min
+
+            </strong>
+
+        </div>
+
+        <div
+            class="chart"
+            id="weeklyChart">
+        </div>
+
+    </div>
+
+    
+
+    <div class="card">
+
+        <p style="
+            font-size:13px;
+            line-height:1.6;
+            font-style:italic;
+            color:#555;
+        ">
+
+            “You don't need to finish everything
+            today. You just need to make tomorrow
+            easier.”
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="page" id="subjects">
+
+    <h1 class="title">
+        Subjects
+    </h1>
+
+    <p class="subtitle">
+        Five subjects. One mission.
+    </p>
+
+    <div id="subjectCards"></div>
+
+</section>
+
+<section class="page" id="subjectDetail">
+
+    <div
+        onclick="go('subjects')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← SUBJECTS
+    </div>
+
+    <h1
+        class="title"
+        id="subjectDetailTitle">
+        Computer Science
+    </h1>
+
+    <p
+        class="subtitle"
+        id="subjectDetailSubtitle">
+        Priority #1 — build the foundation for BCA.
+    </p>
+
+    <div class="hero mission-hero">
+
+        <div class="hero-label">
+            TARGET SCORE
+        </div>
+
+        <h1
+            style="
+            font-size:43px;
+            margin:7px 0"
+            id="subjectDetailTarget">
+            90+
+        </h1>
+
+        <p
+            style="
+            font-size:11px;
+            color:#777">
+            UNDERSTAND IT. DON'T JUST MEMORIZE IT.
+        </p>
+
+    </div>
+
+    <div class="grid2">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                PROGRESS
+            </div>
+
+            <div
+                class="stat-value orange"
+                id="subjectDetailProgress">
+                0%
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                CHAPTERS
+            </div>
+
+            <div
+                class="stat-value"
+                id="subjectDetailChapterCount">
+                0/12
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+
+        <h3>
+            Chapter Tracker
+        </h3>
+
+        <span id="subjectDetailChapterLabel">
+            12 CHAPTERS
+        </span>
+
+    </div>
+
+    <div id="subjectDetailChapters"></div>
+
+</section>
+
+<section class="page" id="syllabus">
+
+    <h1 class="title">
+        Syllabus
+    </h1>
+
+    <p class="subtitle">
+        Every chapter, every subject, one screen.
+    </p>
+
+    <div id="syllabusList"></div>
+
+</section>
+
+<section class="page" id="mission">
+
+    <h1 class="title">
+        45-Day Mission
+    </h1>
+
+    <p class="subtitle">
+        One day at a time.
+    </p>
+
+    <div id="days"></div>
+
+</section>
+
+<section class="page" id="analytics">
+
+    <h1 class="title">
+        Progress
+    </h1>
+
+    <p class="subtitle">
+        See whether your effort is actually working.
+    </p>
+
+    <div class="grid2">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                STUDY HOURS
+            </div>
+
+            <div
+                class="stat-value"
+                id="analyticsHours">
+                0
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TASKS DONE
+            </div>
+
+            <div
+                class="stat-value"
+                id="analyticsTasks">
+                0
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                CHAPTERS
+            </div>
+
+            <div
+                class="stat-value"
+                id="analyticsChapters">
+                0
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                STREAK
+            </div>
+
+            <div
+                class="stat-value orange"
+                id="analyticsStreak">
+                0 🔥
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+        <h3>Subject Progress</h3>
+    </div>
+
+    <div
+        class="card"
+        id="analyticsSubjects">
+    </div>
+
+</section>
+
+<section class="page" id="pyq">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        PYQ Center
+    </h1>
+
+    <p class="subtitle">
+        Train with real exam-style questions.
+    </p>
+
+    <select id="pyqSubject">
+
+        <option>
+            Computer Science
+        </option>
+
+        <option>
+            Political Science
+        </option>
+
+        <option>
+            Business Studies
+        </option>
+
+        <option>
+            Data Entry Operations
+        </option>
+
+        <option>
+            English
+        </option>
+
+    </select>
+
+    <div class="section-title">
+
+        <h3>
+            Previous Papers
+        </h3>
+
+    </div>
+
+    <div id="pyqs"></div>
+
+    <div
+        class="card"
+        style="
+        display:flex;
+        gap:8px;
+        align-items:center">
+
+        <input
+            class="input"
+            id="pyqCustomLabel"
+            placeholder="e.g. April 2026"
+            style="margin:0;flex:1"
+            onkeydown="
+            if(event.key==='Enter')
+                addCustomPyq()">
+
+        <button
+            class="btn"
+            style="
+            white-space:nowrap;
+            padding:11px 16px"
+            onclick="addCustomPyq()">
+
+            + ADD
+
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <strong class="card-title">
+            Mistake Bank
+        </strong>
+
+        <p
+            class="muted small"
+            style="margin-top:7px">
+
+            Save questions you got wrong
+            and revise them before the exam.
+
+        </p>
+
+        <button
+            class="btn secondary"
+            style="margin-top:12px"
+            onclick="go('notes')">
+
+            📝 OPEN NOTES
+
+        </button>
+
+    </div>
+
+</section>
+
+<section class="page" id="timer">
+
+    <h1 class="title">
+        Study Timer
+    </h1>
+
+    <p class="subtitle">
+        Focus. No distractions.
+    </p>
+
+    <select id="timerSubject" onchange="changeTimerSubject()">
+
+        <option value="cs">
+            Computer Science
+        </option>
+
+        <option value="pol">
+            Political Science
+        </option>
+
+        <option value="bst">
+            Business Studies
+        </option>
+
+        <option value="de">
+            Data Entry
+        </option>
+
+        <option value="eng">
+            English
+        </option>
+
+    </select>
+
+    <div
+        class="timer"
+        id="timerCircle">
+
+        <div class="timer-inner">
+
+            <div
+                class="timer-time"
+                id="timerDisplay">
+
+                50:00
+
+            </div>
+
+            <div class="timer-label">
+                FOCUS SESSION
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="timer-buttons">
+
+        <button
+            class="btn"
+            onclick="startTimer()">
+            START
+        </button>
+
+        <button
+            class="btn secondary"
+            onclick="pauseTimer()">
+            PAUSE
+        </button>
+
+        <button
+            class="btn secondary"
+            onclick="resetTimer()">
+            RESET
+        </button>
+
+    </div>
+
+    <button
+        class="btn full dark"
+        style="margin-top:12px"
+        onclick="markTimerSubjectDone()">
+
+        ✓ SUBMIT SUBJECT AS DONE
+
+    </button>
+
+    <div
+        class="grid2"
+        style="margin-top:25px">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TODAY
+            </div>
+
+            <div
+                class="stat-value"
+                id="todayMinutes">
+                0m
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-label">
+                TOTAL
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalHours">
+                0h
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="page" id="mock">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Mock Tests
+    </h1>
+
+    <p class="subtitle">
+        Test yourself before the real exam does.
+    </p>
+
+    <button
+        class="btn full"
+        onclick="startMock()">
+
+        🎯 START MOCK TEST
+
+    </button>
+
+    <div class="section-title">
+
+        <h3>
+            Mock History
+        </h3>
+
+    </div>
+
+    <div id="mockHistory"></div>
+
+</section>
+
+<section class="page" id="achievements">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Achievements
+    </h1>
+
+    <p class="subtitle">
+        Consistency becomes something you can see.
+    </p>
+
+    <div class="hero mission-hero">
+
+        <div class="hero-label">
+            CURRENT STREAK
+        </div>
+
+        <h1
+            style="
+            font-size:43px;
+            margin:7px 0">
+
+            <span id="achievementStreak">
+                0
+            </span>
+            🔥
+
+        </h1>
+
+        <p
+            style="
+            font-size:11px;
+            color:#777">
+
+            KEEP SHOWING UP.
+
+        </p>
+
+    </div>
+
+    <div
+        class="badges"
+        id="badges">
+    </div>
+
+</section>
+
+<section class="page" id="journal">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Study Journal
+    </h1>
+
+    <p class="subtitle">
+        Write what today's version of you learned.
+    </p>
+
+    <div class="card">
+
+        <strong class="card-title">
+            What did you learn?
+        </strong>
+
+        <textarea
+            id="learned"
+            placeholder="Today I learned...">
+        </textarea>
+
+        <strong
+            class="card-title"
+            style="
+            display:block;
+            margin-top:17px">
+
+            What was difficult?
+
+        </strong>
+
+        <textarea
+            id="difficult"
+            placeholder="I struggled with...">
+        </textarea>
+
+        <strong
+            class="card-title"
+            style="
+            display:block;
+            margin-top:17px">
+
+            What should you revise?
+
+        </strong>
+
+        <textarea
+            id="revise"
+            placeholder="Tomorrow I need to revise...">
+        </textarea>
+
+        <button
+            class="btn full"
+            style="margin-top:15px"
+            onclick="saveJournal()">
+
+            SAVE JOURNAL
+
+        </button>
+
+    </div>
+
+</section>
+
+<section class="page" id="targets">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Target Marks
+    </h1>
+
+    <p class="subtitle">
+        Give every subject a destination.
+    </p>
+
+    <div id="targetList"></div>
+
+    <div class="hero mission-hero">
+
+        <div class="hero-label">
+            OVERALL TARGET
+        </div>
+
+        <h1
+            id="averageTarget"
+            style="
+            font-size:43px;
+            margin:7px 0">
+
+            80%
+
+        </h1>
+
+        <p
+            style="
+            font-size:11px;
+            color:#777">
+
+            YOUR AVERAGE TARGET
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="page" id="exam">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Exam Center
+    </h1>
+
+    <p class="subtitle">
+        Keep your important exam information here.
+    </p>
+
+    <div class="hero mission-hero">
+
+        <div class="hero-label">
+            EXAM COUNTDOWN
+        </div>
+
+        <h1
+            id="examDays"
+            style="
+            font-size:43px;
+            margin:7px 0">
+
+            --
+
+        </h1>
+
+        <p
+            style="
+            font-size:11px;
+            color:#777">
+
+            DAYS REMAINING
+
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Computer Science
+                </strong>
+
+                <p>
+                    Code: 330
+                </p>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Political Science
+                </strong>
+
+                <p>
+                    Code: 317
+                </p>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Business Studies
+                </strong>
+
+                <p>
+                    Code: 319
+                </p>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Data Entry Operations
+                </strong>
+
+                <p>
+                    Code: 336
+                </p>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    English
+                </strong>
+
+                <p>
+                    Code: 302
+                </p>
+
+            </div>
+
+            <span class="status">
+                PENDING
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="page" id="notes">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Notes
+    </h1>
+
+    <p class="subtitle">
+        Your personal revision notebook.
+    </p>
+
+    <input
+        class="input"
+        id="noteSearch"
+        placeholder="Search notes..."
+        oninput="renderNotes()">
+
+    <button
+        class="btn full"
+        style="margin-top:12px"
+        onclick="newNote()">
+
+        + CREATE NEW NOTE
+
+    </button>
+
+    <div
+        id="notesList"
+        style="margin-top:15px">
+    </div>
+
+</section>
+
+<section class="page" id="more">
+
+    <h1 class="title">
+        More
+    </h1>
+
+    <p class="subtitle">
+        Everything else in your mission, in one place.
+    </p>
+
+    <div class="card">
+
+        <div
+            class="more-item"
+            onclick="go('pyq')">
+
+            <div class="more-icon">📝</div>
+
+            <div class="more-main">
+                <strong>PYQ Bank</strong>
+                <p>Practice previous year questions</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('mock')">
+
+            <div class="more-icon">🎯</div>
+
+            <div class="more-main">
+                <strong>Mock Tests</strong>
+                <p>Log scores and track results</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('achievements')">
+
+            <div class="more-icon">🏆</div>
+
+            <div class="more-main">
+                <strong>Achievements</strong>
+                <p>Badges you've unlocked</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('journal')">
+
+            <div class="more-icon">📔</div>
+
+            <div class="more-main">
+                <strong>Study Journal</strong>
+                <p>Daily reflections and log</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('targets')">
+
+            <div class="more-icon">🎯</div>
+
+            <div class="more-main">
+                <strong>Targets</strong>
+                <p>Set per-subject goal scores</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('exam')">
+
+            <div class="more-icon">📅</div>
+
+            <div class="more-main">
+                <strong>Exam Countdown</strong>
+                <p>Days left for each paper</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('notes')">
+
+            <div class="more-icon">🗒️</div>
+
+            <div class="more-main">
+                <strong>Notes</strong>
+                <p>Your revision notebook</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+        <div
+            class="more-item"
+            onclick="go('settings')">
+
+            <div class="more-icon">⚙️</div>
+
+            <div class="more-main">
+                <strong>Settings</strong>
+                <p>Manage your mission data</p>
+            </div>
+
+            <div class="more-chevron">›</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="page" id="settings">
+
+    <div
+        onclick="go('more')"
+        style="
+        font-size:11px;
+        font-weight:800;
+        color:var(--orange);
+        margin-bottom:12px;
+        cursor:pointer">
+        ← MORE
+    </div>
+
+    <h1 class="title">
+        Settings
+    </h1>
+
+    <p class="subtitle">
+        Manage your mission data.
+    </p>
+
+    <div class="card">
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Daily Study Goal
+                </strong>
+
+                <p>
+                    2 hours
+                </p>
+
+            </div>
+
+            <button class="btn secondary">
+                2H
+            </button>
+
+        </div>
+
+        <div class="row">
+
+            <div class="row-main">
+
+                <strong>
+                    Theme
+                </strong>
+
+                <p>
+                    White + Orange
+                </p>
+
+            </div>
+
+            <span class="status done">
+                ACTIVE
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <button
+            class="btn secondary full"
+            onclick="exportData()">
+
+            💾 EXPORT MY PROGRESS
+
+        </button>
+
+        <button
+            class="btn secondary full"
+            style="margin-top:10px"
+            onclick="importData()">
+
+            📂 IMPORT PROGRESS
+
+        </button>
+
+        <button
+            class="btn dark full"
+            style="margin-top:10px"
+            onclick="resetAll()">
+
+            RESET EVERYTHING
+
+        </button>
+
+    </div>
+
+</section>
+
+<nav class="bottom-nav">
+
+    <button
+        class="nav-btn active"
+        onclick="go('home',this)">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M3 11.5 12 4l9 7.5"/>
+            <path d="M5.5 10v9a1 1 0 0 0 1 1H9.5a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-9"/>
+        </svg>
+        Home
+
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="go('subjects',this)">
+
+        <svg viewBox="0 0 24 24">
+            <rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/>
+            <rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/>
+            <rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/>
+            <rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/>
+        </svg>
+        Subjects
+
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="go('syllabus',this)">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M6 4.5h9a2.5 2.5 0 0 1 2.5 2.5v12.5H8.5A2.5 2.5 0 0 1 6 17V4.5Z"/>
+            <path d="M6 17a2.5 2.5 0 0 1 2.5-2.5H17.5"/>
+            <path d="M9 8h6"/>
+            <path d="M9 11h6"/>
+        </svg>
+        Syllabus
+
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="go('analytics',this)">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M4 20V11"/>
+            <path d="M10 20V6"/>
+            <path d="M16 20v-8"/>
+            <path d="M20 20V4"/>
+        </svg>
+        Progress
+
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="go('more',this)">
+
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="5.5" r="1.6" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="18.5" r="1.6" fill="currentColor" stroke="none"/>
+        </svg>
+        More
+
+    </button>
+
+</nav>
+
+</div>
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+<div
+    class="modal-overlay"
+    id="modalOverlay"
+    onclick="if(event.target===this)closeModal()">
+
+    <div class="modal-box">
+
+        <h3
+            class="modal-title"
+            id="modalTitle">
+        </h3>
+
+        <p
+            class="modal-message"
+            id="modalMessage">
+        </p>
+
+        <div
+            class="modal-fields"
+            id="modalFields">
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                class="btn secondary"
+                id="modalCancelBtn"
+                onclick="closeModal()">
+                CANCEL
+            </button>
+
+            <button
+                class="btn"
+                id="modalConfirmBtn">
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const subjects=[
+
+    {
+        id:"cs",
+        name:"Computer Science",
+        icon:"💻",
+        target:90,
+        code:330,
+        chapters:[
+            "Binary Logic",
+            "Operating System",
+            "Data Communication and Networking",
+            "Communications on Internet",
+            "Digital Documentation",
+            "Spreadsheets",
+            "Digital Presentation",
+            "Control Statements",
+            "Functions",
+            "Array",
+            "Structure, Typedef & Enumerated Data Type",
+            "Classes & Objects with Constructors/Destructors",
+            "Inheritance – Extending Classes",
+            "Pointer",
+            "Files",
+            "Database Management System",
+            "Web Designing using HTML",
+            "Inserting Images & Lists in a Web Page"
+        ]
+    },
+
+    {
+        id:"pol",
+        name:"Political Science",
+        icon:"🏛️",
+        target:90,
+        code:317,
+        chapters:[
+            "Nation and State",
+            "Distinction Between Society, Nation, State and Government",
+            "Major Political Theories",
+            "Directive Principles of State Policy and Fundamental Duties",
+            "Emergency Provisions",
+            "Union Executive",
+            "Parliament of India",
+            "Supreme Court of India",
+            "High Courts and Subordinate Courts",
+            "Local Government: Urban and Rural",
+            "Universal Adult Franchise and the Methods of Representation",
+            "Electoral System in India",
+            "National Political Parties",
+            "Regionalism and Regional Parties",
+            "Public Opinion and Pressure Group",
+            "Environmental Awareness",
+            "Good Governance",
+            "Human Rights",
+            "India's Foreign Policy",
+            "India and Its Neighbours: China, Pakistan, and Sri Lanka",
+            "United Nations",
+            "United Nations Peace Activities"
+        ]
+    },
+
+    {
+        id:"bst",
+        name:"Business Studies",
+        icon:"📊",
+        target:90,
+        code:319,
+        chapters:[
+            "Support Services",
+            "Business Environment",
+            "Forms of Business",
+            "Company Form of Business",
+            "Planning and Organising",
+            "Staffing and Directing",
+            "Co-ordination and Controlling",
+            "Financial Planning and Management",
+            "Long Term Sources of Finance",
+            "Financial Markets",
+            "Marketing Mix",
+            "Advertising and Salesmanship",
+            "External Trade",
+            "Self-Employment"
+        ]
+    },
+
+    {
+        id:"de",
+        name:"Data Entry Operations",
+        icon:"⌨️",
+        target:90,
+        code:336,
+        chapters:[
+            "Basics of Computer",
+            "Formatting of Documents",
+            "Mail Merge",
+            "Formulas, Functions and Chart",
+            "Creating Presentation",
+            "Internet"
+        ]
+    },
+
+    {
+        id:"eng",
+        name:"English",
+        icon:"📖",
+        target:90,
+        code:302,
+        chapters:[
+            "An Astrologer's Day",
+            "Bholi",
+            "After Twenty Years",
+            "The Necklace",
+            "Three Questions",
+            "Of Studies",
+            "Where the Mind is Without Fear",
+            "If",
+            "Reading with Understanding (Stress before Examination)",
+            "Kabir and Thiruvalluvar",
+            "Reading with Understanding (Nation Builders of India)",
+            "Reading with Understanding (International Fight Against Drug Abuse and Illicit Trafficking)",
+            "Writing Letters",
+            "Writing Emails",
+            "Writing Reports",
+            "Writing Job Applications"
+        ]
+    }
+
+];
+
+const csChapters=
+    subjects.find(
+        s=>s.id==="cs"
+    ).chapters;
+
+function subjectById(id){
+
+    return subjects.find(
+        s=>s.id===id
+    )||subjects[0];
+
+}
+
+function get(key,fallback){
+
+    try{
+
+        const value=
+            localStorage.getItem(key);
+
+        return value===null
+            ?fallback
+            :JSON.parse(value);
+
+    }catch{
+
+        return fallback;
+
+    }
+
+}
+
+function set(key,value){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+
+}
+
+function todayDate(){
+
+    const now=new Date();
+
+    const year=now.getFullYear();
+
+    const month=
+        String(
+            now.getMonth()+1
+        ).padStart(2,"0");
+
+    const day=
+        String(
+            now.getDate()
+        ).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+
+}
+
+function go(id,button){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
+
+    const page=
+        document.getElementById(id);
+
+    if(page){
+        page.classList.add("active");
+    }
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    window.scrollTo(0,0);
+
+    if(id==="analytics")
+        renderAnalytics();
+
+    if(id==="notes")
+        renderNotes();
+
+    if(id==="achievements")
+        renderAchievements();
+
+    if(id==="syllabus")
+        renderSyllabus();
+
+}
+
+let toastTimer;
+
+function toast(message){
+
+    const el=
+        document.getElementById("toast");
+
+    el.textContent=message;
+
+    el.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer=setTimeout(()=>{
+
+        el.classList.remove("show");
+
+    },2200);
+
+}
+
+function closeModal(){
+
+    document
+        .getElementById("modalOverlay")
+        .classList.remove("show");
+
+}
+
+function openFormModal(config){
+
+    const overlay=
+        document.getElementById(
+            "modalOverlay"
+        );
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent=
+        config.title||"";
+
+    const messageEl=
+        document.getElementById(
+            "modalMessage"
+        );
+
+    messageEl.textContent=
+        config.message||"";
+
+    messageEl.style.display=
+        config.message?"block":"none";
+
+    const fieldsEl=
+        document.getElementById(
+            "modalFields"
+        );
+
+    fieldsEl.innerHTML="";
+
+    (config.fields||[]).forEach(
+        field=>{
+
+            const wrap=
+                document.createElement(
+                    "div"
+                );
+
+            const label=
+                document.createElement(
+                    "label"
+                );
+
+            label.textContent=
+                field.label;
+
+            wrap.appendChild(label);
+
+            const input=
+                document.createElement(
+                    field.type==="textarea"
+                    ?"textarea"
+                    :"input"
+                );
+
+            input.className="input";
+
+            input.id=
+                "modalField_"+
+                field.id;
+
+            input.style.margin="0";
+
+            if(field.type&&
+                field.type!=="textarea")
+                input.type=field.type;
+
+            if(field.placeholder)
+                input.placeholder=
+                    field.placeholder;
+
+            if(field.value!==undefined)
+                input.value=field.value;
+
+            wrap.appendChild(input);
+
+            fieldsEl.appendChild(wrap);
+
+        }
+    );
+
+    const confirmBtn=
+        document.getElementById(
+            "modalConfirmBtn"
+        );
+
+    confirmBtn.textContent=
+        config.confirmText||"SAVE";
+
+    document.getElementById(
+        "modalCancelBtn"
+    ).style.display="";
+
+    confirmBtn.onclick=()=>{
+
+        const values={};
+
+        let valid=true;
+
+        (config.fields||[]).forEach(
+            field=>{
+
+                const el=
+                    document.getElementById(
+                        "modalField_"+
+                        field.id
+                    );
+
+                const val=el.value;
+
+                if(
+                    field.required&&
+                    !val.trim()
+                ){
+                    valid=false;
+                }
+
+                values[field.id]=val;
+
+            }
+        );
+
+        if(!valid){
+
+            toast(
+                "Please fill in all fields"
+            );
+
+            return;
+
+        }
+
+        closeModal();
+
+        config.onSubmit(values);
+
+    };
+
+    overlay.classList.add("show");
+
+    setTimeout(()=>{
+
+        const first=
+            fieldsEl.querySelector(
+                "input,textarea"
+            );
+
+        if(first)
+            first.focus();
+
+    },250);
+
+}
+
+function openConfirmModal(config){
+
+    const overlay=
+        document.getElementById(
+            "modalOverlay"
+        );
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent=
+        config.title||"Are you sure?";
+
+    const messageEl=
+        document.getElementById(
+            "modalMessage"
+        );
+
+    messageEl.textContent=
+        config.message||"";
+
+    messageEl.style.display=
+        config.message?"block":"none";
+
+    document.getElementById(
+        "modalFields"
+    ).innerHTML="";
+
+    const confirmBtn=
+        document.getElementById(
+            "modalConfirmBtn"
+        );
+
+    confirmBtn.textContent=
+        config.confirmText||"CONFIRM";
+
+    document.getElementById(
+        "modalCancelBtn"
+    ).style.display="";
+
+    confirmBtn.onclick=()=>{
+
+        closeModal();
+
+        config.onConfirm();
+
+    };
+
+    overlay.classList.add("show");
+
+}
+
+function getTasks(){
+
+    return get(
+        "tasks_"+todayDate(),
+        {}
+    );
+
+}
+
+function toggleTask(button){
+
+    const tasks=getTasks();
+
+    const id=button.dataset.task;
+
+    tasks[id]=!tasks[id];
+
+    set(
+        "tasks_"+todayDate(),
+        tasks
+    );
+
+    const minutes=
+        (typeof timerDurations!=="undefined"&&
+        timerDurations[id])||0;
+
+    if(minutes){
+
+        addStudyMinutes(
+            tasks[id]
+            ?minutes
+            :-minutes
+        );
+
+    }
+
+    applyTasks();
+
+    updateDashboard();
+
+    toast(
+        tasks[id]
+        ?"Task completed 🔥"
+        :"Task unchecked"
+    );
+
+}
+
+function applyTasks(){
+
+    const tasks=getTasks();
+
+    document
+        .querySelectorAll(
+            ".check[data-task]"
+        )
+        .forEach(button=>{
+
+            button.classList.toggle(
+                "done",
+                !!tasks[
+                    button.dataset.task
+                ]
+            );
+
+        });
+
+}
+
+function stagesKey(subjectId){
+
+    return subjectId==="cs"
+        ?"csStages"
+        :"stages_"+subjectId;
+
+}
+
+function getStages(subjectId){
+
+    const id=subjectId||"cs";
+
+    const chapters=
+        subjectById(id).chapters;
+
+    let stages=
+        get(stagesKey(id),[]);
+
+    while(
+        stages.length<
+        chapters.length
+    ){
+
+        stages.push({
+
+            learned:false,
+            notes:false,
+            pyq:false,
+            revised:false
+
+        });
+
+    }
+
+    set(
+        stagesKey(id),
+        stages
+    );
+
+    return stages;
+
+}
+
+let currentSubjectId="cs";
+
+function renderChapterTracker(subjectId){
+
+    const id=
+        subjectId||
+        currentSubjectId;
+
+    const subject=
+        subjectById(id);
+
+    const container=
+        document.getElementById(
+            "subjectDetailChapters"
+        );
+
+    if(!container)
+        return;
+
+    const stages=getStages(id);
+
+    container.innerHTML="";
+
+    let totalDone=0;
+
+    subject.chapters.forEach(
+        (name,index)=>{
+
+            const stage=
+                stages[index];
+
+            const count=
+                Object.values(stage)
+                .filter(Boolean)
+                .length;
+
+            totalDone+=count;
+
+            const percent=
+                count*25;
+
+            const card=
+                document.createElement(
+                    "div"
+                );
+
+            card.className="chapter";
+
+            card.innerHTML=`
+
+                <div class="chapter-head">
+
+                    <div class="chapter-info">
+
+                        <strong>
+
+                            ${String(index+1)
+                            .padStart(2,"0")}.
+                            ${name}
+
+                        </strong>
+
+                        <p>
+                            ${count}/4 stages completed
+                        </p>
+
+                    </div>
+
+                    <div class="chapter-percent">
+                        ${percent}%
+                    </div>
+
+                </div>
+
+                <div
+                    class="progress"
+                    style="margin-top:10px">
+
+                    <span
+                        style="
+                        width:${percent}%">
+                    </span>
+
+                </div>
+
+                <div class="stage-row">
+
+                    ${stageButton(
+                        id,
+                        index,
+                        "learned",
+                        "Learned",
+                        stage.learned
+                    )}
+
+                    ${stageButton(
+                        id,
+                        index,
+                        "notes",
+                        "Notes",
+                        stage.notes
+                    )}
+
+                    ${stageButton(
+                        id,
+                        index,
+                        "pyq",
+                        "PYQs",
+                        stage.pyq
+                    )}
+
+                    ${stageButton(
+                        id,
+                        index,
+                        "revised",
+                        "Revised",
+                        stage.revised
+                    )}
+
+                </div>
+
+            `;
+
+            container.appendChild(card);
+
+        }
+    );
+
+    const totalPossible=
+        subject.chapters.length*4;
+
+    const progress=
+        Math.round(
+            totalDone/
+            totalPossible*
+            100
+        );
+
+    const progressEl=
+        document.getElementById(
+            "subjectDetailProgress"
+        );
+
+    if(progressEl)
+        progressEl.textContent=
+            progress+"%";
+
+    const chapterCountEl=
+        document.getElementById(
+            "subjectDetailChapterCount"
+        );
+
+    if(chapterCountEl)
+        chapterCountEl.textContent=
+            stages.filter(
+                stage=>
+                    Object.values(stage)
+                    .every(Boolean)
+            ).length+
+            "/"+
+            subject.chapters.length;
+
+}
+
+function stageButton(
+    subjectId,
+    index,
+    key,
+    text,
+    active
+){
+
+    return `
+
+        <button
+            class="stage ${active?"active":""}"
+            onclick="
+            toggleStage(
+                '${subjectId}',
+                ${index},
+                '${key}'
+            )">
+
+            ${active?"✓ ":""}${text}
+
+        </button>
+
+    `;
+
+}
+
+function toggleStage(subjectId,index,key){
+
+    const stages=getStages(subjectId);
+
+    stages[index][key]=
+        !stages[index][key];
+
+    set(
+        stagesKey(subjectId),
+        stages
+    );
+
+    renderChapterTracker(subjectId);
+
+    renderSubjects();
+
+    updateDashboard();
+
+    toast(
+        stages[index][key]
+        ?"Stage completed 🔥"
+        :"Stage unchecked"
+    );
+
+}
+
+function subjectProgress(subject){
+
+    const stages=
+        getStages(subject.id);
+
+    let done=0;
+
+    stages.forEach(stage=>{
+
+        done+=
+            Object.values(stage)
+            .filter(Boolean)
+            .length;
+
+    });
+
+    return Math.round(
+        done/
+        (subject.chapters.length*4)*
+        100
+    );
+
+}
+
+function openSubjectDetail(subjectId){
+
+    currentSubjectId=subjectId;
+
+    const subject=
+        subjectById(subjectId);
+
+    document.getElementById(
+        "subjectDetailTitle"
+    ).textContent=
+        subject.name;
+
+    document.getElementById(
+        "subjectDetailSubtitle"
+    ).textContent=
+        subject.id==="cs"
+        ?"Priority #1 — build the foundation for BCA."
+        :"Code: "+subject.code+
+        " — stay consistent, stay sharp.";
+
+    document.getElementById(
+        "subjectDetailTarget"
+    ).textContent=
+        get(
+            "target_"+subject.id,
+            subject.target
+        )+"+";
+
+    document.getElementById(
+        "subjectDetailChapterLabel"
+    ).textContent=
+        subject.chapters.length+
+        " CHAPTERS";
+
+    renderChapterTracker(subject.id);
+
+    go("subjectDetail");
+
+}
+
+function renderSyllabus(){
+
+    const container=
+        document.getElementById(
+            "syllabusList"
+        );
+
+    if(!container)
+        return;
+
+    container.innerHTML="";
+
+    subjects.forEach(subject=>{
+
+        const stages=
+            getStages(subject.id);
+
+        const percent=
+            subjectProgress(subject);
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className=
+            "card syllabus-subject";
+
+        const chaptersHTML=
+            subject.chapters
+            .map((name,index)=>{
+
+                const stage=
+                    stages[index]||{};
+
+                const count=
+                    Object.values(stage)
+                    .filter(Boolean)
+                    .length;
+
+                const dotClass=
+                    count===4
+                    ?"done"
+                    :count>0
+                    ?"partial"
+                    :"";
+
+                return `
+
+                    <div class="syllabus-chapter ${
+                        count===4
+                        ?"is-done"
+                        :""
+                    }">
+
+                        <div class="syllabus-dot ${dotClass}"></div>
+
+                        <span>
+                            ${String(index+1)
+                            .padStart(2,"0")}.
+                            ${name}
+                        </span>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+        card.innerHTML=`
+
+            <div
+                class="syllabus-head"
+                onclick="openSubjectDetail('${subject.id}')">
+
+                <div class="syllabus-icon">
+                    ${subject.icon}
+                </div>
+
+                <div class="syllabus-head-main">
+
+                    <strong>
+                        ${subject.name}
+                    </strong>
+
+                    <p>
+                        ${subject.chapters.length} chapters
+                    </p>
+
+                </div>
+
+                <div class="syllabus-percent">
+                    ${percent}%
+                </div>
+
+                <div class="syllabus-chevron">›</div>
+
+            </div>
+
+            <div class="syllabus-chapters">
+                ${chaptersHTML}
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+function renderSubjects(){
+
+    const container=
+        document.getElementById(
+            "subjectCards"
+        );
+
+    container.innerHTML="";
+
+    subjects.forEach(subject=>{
+
+        const percent=
+            subjectProgress(subject);
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className=
+            "card subject";
+
+        card.innerHTML=`
+
+            <div class="subject-head">
+
+                <div class="subject-icon">
+                    ${subject.icon}
+                </div>
+
+                <div class="subject-info">
+
+                    <strong>
+                        ${subject.name}
+                    </strong>
+
+                    <p>
+                        Target ${get(
+                            "target_"+subject.id,
+                            subject.target
+                        )}+
+                    </p>
+
+                </div>
+
+                <div class="subject-percent">
+                    ${percent}%
+                </div>
+
+            </div>
+
+            <div
+                class="progress"
+                style="margin-top:13px">
+
+                <span
+                    style="width:${percent}%">
+                </span>
+
+            </div>
+
+        `;
+
+        card.onclick=()=>{
+
+            openSubjectDetail(subject.id);
+
+        };
+
+        container.appendChild(card);
+
+    });
+
+}
+
+function renderDays(){
+
+    const container=
+        document.getElementById(
+            "days"
+        );
+
+    container.innerHTML="";
+
+    const mission=
+        get("missionDays",[]);
+
+    for(let i=1;i<=45;i++){
+
+        const state=
+            mission[i] ||
+            "upcoming";
+
+        const day=
+            document.createElement(
+                "div"
+            );
+
+        day.className=
+            "day "+
+            (
+                state==="completed"
+                ?"completed"
+                :state==="partial"
+                ?"partial"
+                :""
+            );
+
+        day.innerHTML=`
+
+            <div class="day-dot"></div>
+
+            <div class="card day-card">
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:
+                    space-between;
+                    align-items:center">
+
+                    <strong>
+                        DAY ${i}
+                    </strong>
+
+                    <span
+                        class="status ${
+                            state!=="upcoming"
+                            ?"done"
+                            :""
+                        }">
+
+                        ${state.toUpperCase()}
+
+                    </span>
+
+                </div>
+
+                <p
+                    class="muted small"
+                    style="margin-top:7px">
+
+                    2 hours planned
+
+                </p>
+
+                <div
+                    style="
+                    display:flex;
+                    gap:7px;
+                    margin-top:11px">
+
+                    <button
+                        class="btn"
+                        style="font-size:9px"
+                        onclick="
+                        setMission(
+                            ${i},
+                            'completed'
+                        )">
+
+                        COMPLETE
+
+                    </button>
+
+                    <button
+                        class="btn secondary"
+                        style="font-size:9px"
+                        onclick="
+                        setMission(
+                            ${i},
+                            'partial'
+                        )">
+
+                        PARTIAL
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+        container.appendChild(day);
+
+    }
+
+}
+
+function setMission(day,status){
+
+    const mission=
+        get("missionDays",[]);
+
+    mission[day]=status;
+
+    set(
+        "missionDays",
+        mission
+    );
+
+    renderDays();
+
+    updateStreak();
+
+    toast(
+        status==="completed"
+        ?"Mission completed 🔥"
+        :"Mission marked partial"
+    );
+
+}
+
+function updateStreak(){
+
+    const mission=
+        get("missionDays",[]);
+
+    let streak=0;
+
+    for(
+        let i=1;
+        i<=45;
+        i++
+    ){
+
+        if(
+            mission[i]==="completed"
+        ){
+
+            streak++;
+
+        }else{
+
+            break;
+
+        }
+
+    }
+
+    document.getElementById(
+        "streak"
+    ).textContent=streak;
+
+    const analytics=
+        document.getElementById(
+            "analyticsStreak"
+        );
+
+    if(analytics){
+
+        analytics.textContent=
+            streak+" 🔥";
+
+    }
+
+    const achievement=
+        document.getElementById(
+            "achievementStreak"
+        );
+
+    if(achievement){
+
+        achievement.textContent=
+            streak;
+
+    }
+
+}
+
+function getStudyData(){
+
+    return get(
+        "dailyStudy",
+        {}
+    );
+
+}
+
+function addStudyMinutes(minutes,forDay){
+
+    const data=
+        getStudyData();
+
+    const day=
+        forDay||todayDate();
+
+    data[day]=
+        Math.max(
+            0,
+            (data[day]||0)+minutes
+        );
+
+    set(
+        "dailyStudy",
+        data
+    );
+
+    updateHero();
+
+    renderWeeklyChart();
+
+    updateHours();
+
+}
+
+function updateHero(){
+
+    const data=
+        getStudyData();
+
+    const minutes=
+        data[todayDate()]||0;
+
+    const progress=
+        Math.min(
+            100,
+            minutes/120*100
+        );
+
+    const dots=
+        document.querySelectorAll(
+            "#energyDots span"
+        );
+
+    const filled=
+        Math.floor(
+            progress/20
+        );
+
+    dots.forEach(
+        (dot,index)=>{
+
+            dot.classList.toggle(
+                "active",
+                index<filled
+            );
+
+        }
+    );
+
+    document.getElementById(
+        "heroMinutes"
+    ).textContent=
+        minutes;
+
+    document.getElementById(
+        "heroProgress"
+    ).style.width=
+        progress+"%";
+
+    const title=
+        document.getElementById(
+            "heroTitle"
+        );
+
+    const message=
+        document.getElementById(
+            "heroMessage"
+        );
+
+    const status=
+        document.getElementById(
+            "energyStatus"
+        );
+
+    status.className=
+        "energy-status";
+
+    if(minutes===0){
+
+        title.innerHTML=
+            "YOUR MISSION<br>STARTS NOW.";
+
+        message.textContent=
+            "2 hours today. That's all you owe yourself.";
+
+        status.textContent=
+            "○ START YOUR ENGINE";
+
+    }
+
+    else if(minutes<30){
+
+        title.innerHTML=
+            "YOU'RE<br>WARMING UP.";
+
+        message.textContent=
+            "Don't stop now. The first step is always the hardest.";
+
+        status.textContent=
+            "● ENGINE STARTED";
+
+        status.classList.add("active");
+
+    }
+
+    else if(minutes<60){
+
+        title.innerHTML=
+            "KEEP<br>THE FIRE ALIVE.";
+
+        message.textContent=
+            "You're already ahead of the version of you who did nothing.";
+
+        status.textContent=
+            "●● MOMENTUM BUILDING";
+
+        status.classList.add("active");
+
+    }
+
+    else if(minutes<90){
+
+        title.innerHTML=
+            "HALFWAY<br>TO GLORY.";
+
+        message.textContent=
+            "Your future BCA student self is going to thank you.";
+
+        status.textContent=
+            "●●● LOCKED IN";
+
+        status.classList.add("active");
+
+    }
+
+    else if(minutes<120){
+
+        title.innerHTML=
+            "ALMOST<br>THERE.";
+
+        message.textContent=
+            "One final push. Finish today's promise.";
+
+        status.textContent=
+            "●●●● FINAL PUSH";
+
+        status.classList.add("active");
+
+    }
+
+    else{
+
+        title.innerHTML=
+            "MISSION<br>COMPLETE. 🫡";
+
+        message.textContent=
+            "You kept your promise to yourself today.";
+
+        status.textContent=
+            "●●●●● 2 HOURS CONQUERED";
+
+        status.classList.add("complete");
+
+    }
+
+}
+
+function renderWeeklyChart(){
+
+    const container=
+        document.getElementById(
+            "weeklyChart"
+        );
+
+    if(!container)
+        return;
+
+    const data=
+        getStudyData();
+
+    const today=
+        new Date();
+
+    const days=[];
+
+    for(let i=6;i>=0;i--){
+
+        const date=
+            new Date(today);
+
+        date.setDate(
+            today.getDate()-i
+        );
+
+        const year=
+            date.getFullYear();
+
+        const month=
+            String(
+                date.getMonth()+1
+            ).padStart(2,"0");
+
+        const day=
+            String(
+                date.getDate()
+            ).padStart(2,"0");
+
+        const key=
+            `${year}-${month}-${day}`;
+
+        days.push({
+
+            key:key,
+
+            date:date,
+
+            minutes:data[key]||0
+
+        });
+
+    }
+
+    const maxMinutes=
+        Math.max(
+            120,
+            ...days.map(
+                d=>d.minutes
+            )
+        );
+
+    const total=
+        days.reduce(
+            (sum,d)=>
+                sum+d.minutes,
+            0
+        );
+
+    document.getElementById(
+        "weeklyTotal"
+    ).textContent=
+        total+" min";
+
+    container.innerHTML="";
+
+    days.forEach(day=>{
+
+        const wrapper=
+            document.createElement(
+                "div"
+            );
+
+        wrapper.className=
+            "bar-wrap";
+
+        const percentage=
+            Math.min(
+                100,
+                day.minutes/
+                maxMinutes*
+                100
+            );
+
+        const isToday=
+            day.key===todayDate();
+
+        const dayName=
+            day.date
+            .toLocaleDateString(
+                "en-US",
+                {
+                    weekday:"short"
+                }
+            )
+            .charAt(0);
+
+        wrapper.innerHTML=`
+
+            <span class="bar-minutes">
+                ${day.minutes}
+            </span>
+
+            <div class="bar-area">
+
+                <div
+                    class="bar ${
+                        isToday
+                        ?"today"
+                        :""
+                    }"
+                    style="
+                    height:${Math.max(
+                        3,
+                        percentage
+                    )}%">
+                </div>
+
+            </div>
+
+            <span class="bar-label">
+                ${dayName}
+            </span>
+
+        `;
+
+        container.appendChild(
+            wrapper
+        );
+
+    });
+
+}
+
+const timerDurations={
+    cs:50,
+    pol:30,
+    bst:25,
+    de:10,
+    eng:5
+};
+
+function currentTimerMinutes(){
+
+    const select=
+        document.getElementById(
+            "timerSubject"
+        );
+
+    return timerDurations[
+        select?select.value:"cs"
+    ]||50;
+
+}
+
+let timerSeconds=
+    currentTimerMinutes()*60;
+
+let timerInterval=null;
+
+let timerRunning=false;
+
+let timerEndAt=null;
+
+let timerStartDay=null;
+
+function saveTimerState(){
+
+    set("timerState",{
+        running:timerRunning,
+        endAt:timerEndAt,
+        remaining:timerSeconds,
+        startDay:timerStartDay,
+        subject:
+            document.getElementById(
+                "timerSubject"
+            )?document.getElementById(
+                "timerSubject"
+            ).value:"cs"
+    });
+
+}
+
+function restoreTimerState(){
+
+    const state=
+        get("timerState",null);
+
+    if(!state)
+        return;
+
+    const select=
+        document.getElementById(
+            "timerSubject"
+        );
+
+    if(select&&state.subject)
+        select.value=
+            state.subject;
+
+    timerStartDay=
+        state.startDay||null;
+
+    if(state.running&&state.endAt){
+
+        const remaining=
+            Math.round(
+                (state.endAt-Date.now())/
+                1000
+            );
+
+        if(remaining<=0){
+
+            timerSeconds=0;
+
+            updateTimer();
+
+            finishTimer();
+
+        }else{
+
+            timerSeconds=
+                remaining;
+
+            timerEndAt=
+                state.endAt;
+
+            updateTimer();
+
+            runTimerInterval();
+
+        }
+
+    }else{
+
+        timerSeconds=
+            typeof state.remaining
+            ==="number"
+            ?state.remaining
+            :currentTimerMinutes()*60;
+
+        updateTimer();
+
+    }
+
+}
+
+function changeTimerSubject(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning=false;
+
+    timerEndAt=null;
+
+    timerStartDay=null;
+
+    timerSeconds=
+        currentTimerMinutes()*60;
+
+    updateTimer();
+
+    saveTimerState();
+
+}
+
+function markTimerSubjectDone(){
+
+    const select=
+        document.getElementById(
+            "timerSubject"
+        );
+
+    const id=
+        select?select.value:"cs";
+
+    const tasks=
+        getTasks();
+
+    if(tasks[id]){
+
+        toast(
+            "Already marked done today ✅"
+        );
+
+        return;
+
+    }
+
+    tasks[id]=true;
+
+    set(
+        "tasks_"+todayDate(),
+        tasks
+    );
+
+    const minutes=
+        timerDurations[id]||0;
+
+    if(minutes)
+        addStudyMinutes(minutes);
+
+    applyTasks();
+
+    updateDashboard();
+
+    toast(
+        "Subject marked as done 🔥"
+    );
+
+}
+
+function updateTimer(){
+
+    const min=
+        Math.floor(
+            timerSeconds/60
+        )
+        .toString()
+        .padStart(2,"0");
+
+    const sec=
+        (timerSeconds%60)
+        .toString()
+        .padStart(2,"0");
+
+    document.getElementById(
+        "timerDisplay"
+    ).textContent=
+        min+":"+sec;
+
+    const progress=
+        1-
+        timerSeconds/
+        (currentTimerMinutes()*60);
+
+    document.getElementById(
+        "timerCircle"
+    ).style.background=
+        `conic-gradient(
+            var(--orange)
+            ${progress*360}deg,
+            #eee
+            ${progress*360}deg
+        )`;
+
+}
+
+function runTimerInterval(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerInterval=
+        setInterval(()=>{
+
+            if(!timerEndAt)
+                return;
+
+            const remaining=
+                Math.round(
+                    (timerEndAt-Date.now())/
+                    1000
+                );
+
+            if(remaining<=0){
+
+                timerSeconds=0;
+
+                updateTimer();
+
+                finishTimer();
+
+                return;
+
+            }
+
+            timerSeconds=
+                remaining;
+
+            updateTimer();
+
+            saveTimerState();
+
+        },1000);
+
+}
+
+function startTimer(){
+
+    if(timerRunning)
+        return;
+
+    if(timerSeconds<=0)
+        timerSeconds=
+            currentTimerMinutes()*60;
+
+    timerRunning=true;
+
+    timerEndAt=
+        Date.now()+
+        timerSeconds*1000;
+
+    if(!timerStartDay)
+        timerStartDay=
+            todayDate();
+
+    runTimerInterval();
+
+    saveTimerState();
+
+    toast(
+        "Focus mode started 🔥"
+    );
+
+}
+
+function pauseTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    if(timerEndAt){
+
+        timerSeconds=
+            Math.max(
+                0,
+                Math.round(
+                    (timerEndAt-Date.now())/
+                    1000
+                )
+            );
+
+    }
+
+    timerRunning=false;
+
+    timerEndAt=null;
+
+    updateTimer();
+
+    saveTimerState();
+
+    toast(
+        "Timer paused"
+    );
+
+}
+
+function resetTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning=false;
+
+    timerEndAt=null;
+
+    timerStartDay=null;
+
+    timerSeconds=
+        currentTimerMinutes()*60;
+
+    updateTimer();
+
+    saveTimerState();
+
+}
+
+function finishTimer(){
+
+    clearInterval(
+        timerInterval
+    );
+
+    timerRunning=false;
+
+    timerEndAt=null;
+
+    const completedMinutes=
+        currentTimerMinutes();
+
+    const creditDay=
+        timerStartDay||
+        todayDate();
+
+    addStudyMinutes(
+        completedMinutes,
+        creditDay
+    );
+
+    addMinutes(completedMinutes);
+
+    timerStartDay=null;
+
+    timerSeconds=
+        currentTimerMinutes()*60;
+
+    updateTimer();
+
+    saveTimerState();
+
+    toast(
+        completedMinutes+" minute session completed! 🔥"
+    );
+
+    if(
+        "vibrate" in navigator
+    ){
+
+        navigator.vibrate(
+            [200,100,200,100,400]
+        );
+
+    }
+
+}
+
+function addMinutes(minutes){
+
+    const total=
+        get(
+            "studyMinutes",
+            0
+        );
+
+    set(
+        "studyMinutes",
+        total+minutes
+    );
+
+    updateHours();
+
+}
+
+function updateHours(){
+
+    const total=
+        get(
+            "studyMinutes",
+            0
+        );
+
+    const hours=
+        total/60;
+
+    document.getElementById(
+        "studyHours"
+    ).textContent=
+        hours.toFixed(1)+"h";
+
+    document.getElementById(
+        "totalHours"
+    ).textContent=
+        hours.toFixed(1)+"h";
+
+    document.getElementById(
+        "analyticsHours"
+    ).textContent=
+        hours.toFixed(1);
+
+    const today=
+        getStudyData()[todayDate()]||0;
+
+    document.getElementById(
+        "todayMinutes"
+    ).textContent=
+        today+"m";
+
+}
+
+function updateDashboard(){
+
+    const tasks=
+        getTasks();
+
+    const validTaskIds=
+        ["cs","pol","bst","de","eng"];
+
+    const completed=
+        validTaskIds
+        .filter(id=>tasks[id])
+        .length;
+
+    document.getElementById(
+        "taskProgress"
+    ).textContent=
+        completed+"/5";
+
+    let totalDone=0;
+
+    let totalPossible=0;
+
+    subjects.forEach(subject=>{
+
+        const stages=
+            getStages(subject.id);
+
+        stages.forEach(stage=>{
+
+            totalDone+=
+                Object.values(stage)
+                .filter(Boolean)
+                .length;
+
+        });
+
+        totalPossible+=
+            subject.chapters.length*4;
+
+    });
+
+    const chapterProgress=
+        Math.round(
+            totalDone/
+            totalPossible*
+            100
+        );
+
+    const taskPercent=
+        Math.round(
+            completed/5*100
+        );
+
+    const studyToday=
+        getStudyData()[todayDate()]||0;
+
+    const studyPercent=
+        Math.min(
+            100,
+            studyToday/
+            120*
+            100
+        );
+
+    const overall=
+        Math.round(
+            (
+                chapterProgress+
+                taskPercent+
+                studyPercent
+            )/3
+        );
+
+    document.getElementById(
+        "overallPercent"
+    ).textContent=
+        overall+"%";
+
+    document.getElementById(
+        "overallBar"
+    ).style.width=
+        overall+"%";
+
+    updateHours();
+
+    updateStreak();
+
+    updateHero();
+
+}
+
+function customPyqKey(subject){
+
+    return "customPyq_"+subject;
+
+}
+
+function getCustomPyqs(subject){
+
+    return get(
+        customPyqKey(subject),
+        []
+    );
+
+}
+
+function addCustomPyq(){
+
+    const input=
+        document.getElementById(
+            "pyqCustomLabel"
+        );
+
+    const label=
+        (input.value||"")
+        .trim();
+
+    if(!label){
+
+        toast(
+            "Enter a paper name first"
+        );
+
+        return;
+
+    }
+
+    const subject=
+        document.getElementById(
+            "pyqSubject"
+        ).value;
+
+    const papers=
+        getCustomPyqs(subject);
+
+    papers.push({
+
+        id:Date.now(),
+        label:label
+
+    });
+
+    set(
+        customPyqKey(subject),
+        papers
+    );
+
+    input.value="";
+
+    renderPYQs();
+
+    toast(
+        "Paper added 📄"
+    );
+
+}
+
+function deleteCustomPyq(subject,id){
+
+    const papers=
+        getCustomPyqs(subject)
+        .filter(
+            paper=>paper.id!==id
+        );
+
+    set(
+        customPyqKey(subject),
+        papers
+    );
+
+    renderPYQs();
+
+    toast(
+        "Paper removed"
+    );
+
+}
+
+function renderPYQs(){
+
+    const container=
+        document.getElementById(
+            "pyqs"
+        );
+
+    const subject=
+        document.getElementById(
+            "pyqSubject"
+        ).value;
+
+    container.innerHTML="";
+
+    [2025,2024,2023,2022]
+    .forEach(year=>{
+
+        const key=
+            "pyq_"+
+            subject+
+            "_"+
+            year;
+
+        const done=
+            get(key,false);
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className="card";
+
+        card.innerHTML=`
+
+            <div class="row">
+
+                <div class="row-main">
+
+                    <strong>
+                        ${subject} — ${year}
+                    </strong>
+
+                    <p>
+                        Previous Year Paper
+                    </p>
+
+                </div>
+
+                <button
+                    class="btn ${
+                        done
+                        ?"secondary"
+                        :""
+                    }"
+                    onclick="
+                    togglePYQ(
+                        '${key}'
+                    )">
+
+                    ${done
+                    ?"✓ DONE"
+                    :"START"}
+
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+    getCustomPyqs(subject)
+    .forEach(paper=>{
+
+        const key=
+            "pyq_custom_"+
+            subject+
+            "_"+
+            paper.id;
+
+        const done=
+            get(key,false);
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className="card";
+
+        card.innerHTML=`
+
+            <div class="row">
+
+                <div class="row-main">
+
+                    <strong>
+                        ${subject} — ${
+                        escapeHTML(paper.label)}
+                    </strong>
+
+                    <p>
+                        Previous Year Paper
+                    </p>
+
+                </div>
+
+                <button
+                    class="btn ${
+                        done
+                        ?"secondary"
+                        :""
+                    }"
+                    style="margin-right:6px"
+                    onclick="
+                    togglePYQ(
+                        '${key}'
+                    )">
+
+                    ${done
+                    ?"✓ DONE"
+                    :"START"}
+
+                </button>
+
+                <button
+                    class="header-icon-btn"
+                    style="width:34px;height:34px;flex-shrink:0"
+                    onclick="
+                    deleteCustomPyq(
+                        '${subject}',
+                        ${paper.id}
+                    )"
+                    aria-label="Delete paper">
+
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 7h16"/>
+                        <path d="M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/>
+                        <path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/>
+                    </svg>
+
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+function togglePYQ(key){
+
+    const current=
+        get(key,false);
+
+    set(
+        key,
+        !current
+    );
+
+    renderPYQs();
+
+    toast(
+        !current
+        ?"PYQ completed 🔥"
+        :"PYQ reopened"
+    );
+
+}
+
+document.getElementById(
+    "pyqSubject"
+).addEventListener(
+    "change",
+    renderPYQs
+);
+
+function startMock(){
+
+    openFormModal({
+
+        title:"Log Mock Test",
+
+        confirmText:"SAVE SCORE",
+
+        fields:[
+
+            {
+                id:"subject",
+                label:"SUBJECT",
+                placeholder:"e.g. Computer Science",
+                required:true
+            },
+
+            {
+                id:"score",
+                label:"SCORE (OUT OF 100)",
+                type:"number",
+                placeholder:"e.g. 78",
+                required:true
+            }
+
+        ],
+
+        onSubmit:values=>{
+
+            const number=
+                Number(values.score);
+
+            if(
+                isNaN(number)||
+                number<0||
+                number>100
+            ){
+
+                toast(
+                    "Enter a score between 0 and 100"
+                );
+
+                return;
+
+            }
+
+            const history=
+                get(
+                    "mockHistory",
+                    []
+                );
+
+            history.push({
+
+                subject:
+                    values.subject.trim(),
+
+                score:number,
+
+                date:
+                    new Date()
+                    .toLocaleDateString()
+
+            });
+
+            set(
+                "mockHistory",
+                history
+            );
+
+            renderMock();
+
+            renderAchievements();
+
+            toast(
+                "Mock score saved 🎯"
+            );
+
+        }
+
+    });
+
+}
+
+function renderMock(){
+
+    const container=
+        document.getElementById(
+            "mockHistory"
+        );
+
+    const history=
+        get(
+            "mockHistory",
+            []
+        );
+
+    container.innerHTML="";
+
+    if(!history.length){
+
+        container.innerHTML=`
+
+            <div class="card">
+
+                <p class="muted small">
+                    No mock tests yet.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    history
+    .slice()
+    .reverse()
+    .forEach(
+        (test,index)=>{
+
+            const card=
+                document.createElement(
+                    "div"
+                );
+
+            card.className="card";
+
+            card.innerHTML=`
+
+                <div class="row">
+
+                    <div class="row-main">
+
+                        <strong>
+                            ${
+                            test.subject
+                            ?escapeHTML(test.subject)
+                            :"Mock Test "+
+                            (history.length-index)
+                            }
+                        </strong>
+
+                        <p>
+                            ${test.date}
+                        </p>
+
+                    </div>
+
+                    <strong
+                        class="${
+                            test.score>=80
+                            ?"green"
+                            :"orange"
+                        }">
+
+                        ${test.score}%
+
+                    </strong>
+
+                </div>
+
+            `;
+
+            container.appendChild(card);
+
+        }
+    );
+
+}
+
+function renderAchievements(){
+
+    const badges=
+        document.getElementById(
+            "badges"
+        );
+
+    const tasks=
+        ["cs","pol","bst","de","eng"]
+        .filter(id=>getTasks()[id])
+        .length;
+
+    const chapters=
+        getStages("cs")
+        .filter(
+            stage=>
+                Object.values(stage)
+                .every(Boolean)
+        )
+        .length;
+
+    const totalHours=
+        get(
+            "studyMinutes",
+            0
+        )/60;
+
+    const achievements=[
+
+        {
+            icon:"🌱",
+            title:"FIRST DAY",
+            desc:"Complete your first task.",
+            unlocked:tasks>0
+        },
+
+        {
+            icon:"🔥",
+            title:"7 DAY STREAK",
+            desc:"Complete seven missions.",
+            unlocked:
+                get("missionDays",[])
+                .slice(1,8)
+                .filter(
+                    x=>x==="completed"
+                ).length>=7
+        },
+
+        {
+            icon:"⏱️",
+            title:"30 HOURS",
+            desc:"Study for 30 hours.",
+            unlocked:
+                totalHours>=30
+        },
+
+        {
+            icon:"💻",
+            title:"CS MASTER",
+            desc:"Complete every CS chapter.",
+            unlocked:
+                chapters>=
+                csChapters.length
+        },
+
+        {
+            icon:"💯",
+            title:"80% MOCK",
+            desc:"Score 80 or higher.",
+            unlocked:
+                get(
+                    "mockHistory",
+                    []
+                ).some(
+                    x=>x.score>=80
+                )
+        },
+
+        {
+            icon:"👑",
+            title:"SYLLABUS DONE",
+            desc:"Complete your preparation.",
+            unlocked:false
+        }
+
+    ];
+
+    badges.innerHTML="";
+
+    achievements.forEach(a=>{
+
+        const div=
+            document.createElement(
+                "div"
+            );
+
+        div.className=
+            "badge "+
+            (
+                !a.unlocked
+                ?"locked"
+                :""
+            );
+
+        div.innerHTML=`
+
+            <div class="badge-icon">
+                ${a.icon}
+            </div>
+
+            <strong>
+                ${a.title}
+            </strong>
+
+            <p>
+                ${a.desc}
+            </p>
+
+        `;
+
+        badges.appendChild(div);
+
+    });
+
+}
+
+function saveJournal(){
+
+    const journal={
+
+        learned:
+            document.getElementById(
+                "learned"
+            ).value,
+
+        difficult:
+            document.getElementById(
+                "difficult"
+            ).value,
+
+        revise:
+            document.getElementById(
+                "revise"
+            ).value,
+
+        date:todayDate()
+
+    };
+
+    set(
+        "journal_"+todayDate(),
+        journal
+    );
+
+    toast(
+        "Journal saved 📝"
+    );
+
+}
+
+function loadJournal(){
+
+    const journal=
+        get(
+            "journal_"+todayDate(),
+            null
+        );
+
+    if(!journal)
+        return;
+
+    document.getElementById(
+        "learned"
+    ).value=
+        journal.learned||"";
+
+    document.getElementById(
+        "difficult"
+    ).value=
+        journal.difficult||"";
+
+    document.getElementById(
+        "revise"
+    ).value=
+        journal.revise||"";
+
+}
+
+function getNotes(){
+
+    return get(
+        "notes",
+        []
+    );
+
+}
+
+function newNote(){
+
+    openFormModal({
+
+        title:"New Note",
+
+        confirmText:"SAVE NOTE",
+
+        fields:[
+
+            {
+                id:"title",
+                label:"TITLE",
+                placeholder:"e.g. Fundamental Rights",
+                required:true
+            },
+
+            {
+                id:"content",
+                label:"NOTE",
+                type:"textarea",
+                placeholder:"Write your note...",
+                required:true
+            }
+
+        ],
+
+        onSubmit:values=>{
+
+            const notes=
+                getNotes();
+
+            notes.push({
+
+                id:Date.now(),
+
+                title:values.title.trim(),
+
+                content:values.content.trim(),
+
+                date:
+                    new Date()
+                    .toLocaleDateString()
+
+            });
+
+            set(
+                "notes",
+                notes
+            );
+
+            renderNotes();
+
+            toast(
+                "Note created 📝"
+            );
+
+        }
+
+    });
+
+}
+
+function renderNotes(){
+
+    const container=
+        document.getElementById(
+            "notesList"
+        );
+
+    if(!container)
+        return;
+
+    const search=
+        (
+            document.getElementById(
+                "noteSearch"
+            ).value||""
+        ).toLowerCase();
+
+    const notes=
+        getNotes()
+        .filter(note=>
+            note.title
+            .toLowerCase()
+            .includes(search)
+            ||
+            note.content
+            .toLowerCase()
+            .includes(search)
+        );
+
+    container.innerHTML="";
+
+    if(!notes.length){
+
+        container.innerHTML=`
+
+            <div class="card">
+
+                <p class="muted small">
+                    No notes found.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    notes
+    .slice()
+    .reverse()
+    .forEach(note=>{
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className="card";
+
+        card.innerHTML=`
+
+            <strong>
+                ${escapeHTML(note.title)}
+            </strong>
+
+            <p
+                class="muted small"
+                style="
+                margin-top:8px;
+                line-height:1.6">
+
+                ${escapeHTML(note.content)}
+
+            </p>
+
+            <div
+                style="
+                display:flex;
+                justify-content:
+                space-between;
+                align-items:center;
+                margin-top:12px">
+
+                <span
+                    class="muted"
+                    style="font-size:9px">
+
+                    ${note.date}
+
+                </span>
+
+                <button
+                    class="btn secondary"
+                    style="font-size:9px"
+                    onclick="
+                    deleteNote(
+                        ${note.id}
+                    )">
+
+                    DELETE
+
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+function deleteNote(id){
+
+    openConfirmModal({
+
+        title:"Delete this note?",
+
+        message:"This can't be undone.",
+
+        confirmText:"DELETE",
+
+        onConfirm:()=>{
+
+            const notes=
+                getNotes()
+                .filter(
+                    note=>note.id!==id
+                );
+
+            set(
+                "notes",
+                notes
+            );
+
+            renderNotes();
+
+            toast(
+                "Note deleted"
+            );
+
+        }
+
+    });
+
+}
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+function renderTargets(){
+
+    const container=
+        document.getElementById(
+            "targetList"
+        );
+
+    container.innerHTML="";
+
+    subjects.forEach(subject=>{
+
+        const target=
+            get(
+                "target_"+subject.id,
+                subject.target
+            );
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className="card";
+
+        card.innerHTML=`
+
+            <div class="row">
+
+                <div class="row-main">
+
+                    <strong>
+                        ${subject.icon}
+                        ${subject.name}
+                    </strong>
+
+                    <p>
+                        Target percentage
+                    </p>
+
+                </div>
+
+                <input
+                    class="input"
+                    style="
+                    width:65px;
+                    margin:0;
+                    text-align:center"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="${target}"
+                    onchange="
+                    saveTarget(
+                        '${subject.id}',
+                        this.value
+                    )">
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+    updateAverageTarget();
+
+}
+
+function saveTarget(id,value){
+
+    let number=
+        Number(value);
+
+    if(
+        isNaN(number)||
+        number<0
+    )
+        number=0;
+
+    if(number>100)
+        number=100;
+
+    set(
+        "target_"+id,
+        number
+    );
+
+    updateAverageTarget();
+
+    renderSubjects();
+
+    toast(
+        "Target updated 🎯"
+    );
+
+}
+
+function updateAverageTarget(){
+
+    let total=0;
+
+    subjects.forEach(subject=>{
+
+        total+=
+            get(
+                "target_"+subject.id,
+                subject.target
+            );
+
+    });
+
+    const average=
+        Math.round(
+            total/
+            subjects.length
+        );
+
+    document.getElementById(
+        "averageTarget"
+    ).textContent=
+        average+"%";
+
+}
+
+function renderAnalytics(){
+
+    const tasks=
+        ["cs","pol","bst","de","eng"]
+        .filter(id=>getTasks()[id])
+        .length;
+
+    const chapters=
+        subjects.reduce(
+            (sum,subject)=>
+                sum+
+                getStages(subject.id)
+                .filter(
+                    stage=>
+                        Object.values(stage)
+                        .every(Boolean)
+                )
+                .length,
+            0
+        );
+
+    document.getElementById(
+        "analyticsTasks"
+    ).textContent=
+        tasks;
+
+    document.getElementById(
+        "analyticsChapters"
+    ).textContent=
+        chapters;
+
+    updateHours();
+
+    const container=
+        document.getElementById(
+            "analyticsSubjects"
+        );
+
+    container.innerHTML="";
+
+    subjects.forEach(subject=>{
+
+        const progress=
+            subjectProgress(subject);
+
+        container.innerHTML+=`
+
+            <div
+                style="margin-bottom:15px">
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:
+                    space-between;
+                    font-size:11px;
+                    margin-bottom:6px">
+
+                    <strong>
+                        ${subject.name}
+                    </strong>
+
+                    <span class="orange">
+                        ${progress}%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <span
+                        style="
+                        width:${progress}%">
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+function exportData(){
+
+    const data={};
+
+    for(
+        let i=0;
+        i<localStorage.length;
+        i++
+    ){
+
+        const key=
+            localStorage.key(i);
+
+        try{
+
+            data[key]=
+                JSON.parse(
+                    localStorage.getItem(key)
+                );
+
+        }catch{
+
+            data[key]=
+                localStorage.getItem(key);
+
+        }
+
+    }
+
+    const blob=
+        new Blob(
+            [
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+    const url=
+        URL.createObjectURL(blob);
+
+    const a=
+        document.createElement(
+            "a"
+        );
+
+    a.href=url;
+
+    a.download=
+        "mission-october-backup.json";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    toast(
+        "Backup exported 💾"
+    );
+
+}
+
+function importData(){
+
+    const input=
+        document.createElement(
+            "input"
+        );
+
+    input.type="file";
+
+    input.accept=".json";
+
+    input.onchange=
+        event=>{
+
+            const file=
+                event.target.files[0];
+
+            if(!file)
+                return;
+
+            const reader=
+                new FileReader();
+
+            reader.onload=()=>{
+
+                try{
+
+                    const data=
+                        JSON.parse(
+                            reader.result
+                        );
+
+                    Object.entries(data)
+                    .forEach(
+                        ([key,value])=>{
+
+                            localStorage.setItem(
+                                key,
+                                JSON.stringify(value)
+                            );
+
+                        }
+                    );
+
+                    location.reload();
+
+                }catch{
+
+                    toast(
+                        "Invalid backup file"
+                    );
+
+                }
+
+            };
+
+            reader.readAsText(file);
+
+        };
+
+    input.click();
+
+}
+
+function resetAll(){
+
+    openConfirmModal({
+
+        title:"Reset everything?",
+
+        message:
+            "This will delete ALL your study progress, notes, tasks and timer data. This can't be undone.",
+
+        confirmText:"DELETE EVERYTHING",
+
+        onConfirm:()=>{
+
+            localStorage.clear();
+
+            location.reload();
+
+        }
+
+    });
+
+}
+
+const EXAM_DATE=
+    "2026-10-01T00:00:00";
+
+function updateCountdown(){
+
+    const examDate=
+        new Date(
+            EXAM_DATE
+        );
+
+    const now=
+        new Date();
+
+    const difference=
+        examDate-now;
+
+    const days=
+        Math.max(
+            0,
+            Math.ceil(
+                difference/
+                (1000*60*60*24)
+            )
+        );
+
+    document.getElementById(
+        "daysLeft"
+    ).textContent=
+        days;
+
+    document.getElementById(
+        "examDays"
+    ).textContent=
+        days;
+
+    const startDate=
+        new Date(
+            "2026-08-19T00:00:00"
+        );
+
+    const dayNumber=
+        Math.floor(
+            (
+                now-startDate
+            )/
+            (1000*60*60*24)
+        )+1;
+
+    document.getElementById(
+        "heroDay"
+    ).textContent=
+        String(
+            Math.max(
+                1,
+                dayNumber
+            )
+        ).padStart(
+            2,
+            "0"
+        );
+
+}
+
+const SYLLABUS_VERSION=2;
+
+if(
+    get("syllabusVersion",1)!==
+    SYLLABUS_VERSION
+){
+
+    ["cs","pol","bst","de","eng"]
+    .forEach(id=>{
+
+        localStorage.removeItem(
+            stagesKey(id)
+        );
+
+    });
+
+    set(
+        "syllabusVersion",
+        SYLLABUS_VERSION
+    );
+
+}
+
+renderSubjects();
+
+renderSyllabus();
+
+renderDays();
+
+renderPYQs();
+
+renderMock();
+
+renderAchievements();
+
+renderTargets();
+
+renderAnalytics();
+
+applyTasks();
+
+loadJournal();
+
+updateDashboard();
+
+restoreTimerState();
+
+updateCountdown();
+
+updateHero();
+
+renderWeeklyChart();
+
+setInterval(
+    updateCountdown,
+    60000
+);
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        if(
+            document.visibilityState===
+            "visible"&&
+            timerRunning&&
+            timerEndAt
+        ){
+
+            const remaining=
+                Math.round(
+                    (timerEndAt-Date.now())/
+                    1000
+                );
+
+            if(remaining<=0){
+
+                timerSeconds=0;
+
+                updateTimer();
+
+                finishTimer();
+
+            }else{
+
+                timerSeconds=
+                    remaining;
+
+                updateTimer();
+
+            }
+
+        }
+
+    }
+);
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker
+        .register("sw.js")
+        .catch(()=>{});
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
